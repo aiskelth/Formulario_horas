@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario Horas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-bold text-center text-purple-700 mb-6">Formulario Horas</h2>
+    <form action="https://n8n.dev.karibuspa.com/webhook-test/reporte_horas" method="POST" class="space-y-4">
+      
+      <div>
+        <label class="block font-semibold">Mes:</label>
+        <select name="mes" required class="w-full mt-1 border rounded px-3 py-2">
+          <option value="">Seleccione un mes</option>
+          <option>Enero</option>
+          <option>Febrero</option>
+          <option>Marzo</option>
+          <option>Abril</option>
+          <option>Mayo</option>
+          <option>Junio</option>
+          <option>Julio</option>
+          <option>Agosto</option>
+          <option>Septiembre</option>
+          <option>Octubre</option>
+          <option>Noviembre</option>
+          <option>Diciembre</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="block font-semibold">Día Inicio:</label>
+        <input type="date" name="dia_ini" required class="w-full mt-1 border rounded px-3 py-2" />
+      </div>
+
+      <div>
+        <label class="block font-semibold">Día Fin:</label>
+        <input type="date" name="dia_fin" required class="w-full mt-1 border rounded px-3 py-2" />
+      </div>
+
+      <div>
+        <label class="block font-semibold">¿Es Semana?</label>
+        <select name="semana" required class="w-full mt-1 border rounded px-3 py-2">
+          <option value="">Seleccione una opción</option>
+          <option value="true">Sí</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+
+      <div class="flex justify-between mt-6">
+        <button type="submit" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800">
+          Enviar
+        </button>
+        <button type="reset" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600">
+          Limpiar
+        </button>
+      </div>
+    </form>
+  </div>
+</body>
+</html>
