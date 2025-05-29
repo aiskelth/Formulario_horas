@@ -151,19 +151,55 @@
       if (value) {
         semanaSelect.disabled = true;
         semanaHidden.value = "false";
-        diaIni.value = "";
-        diaFin.value = "";
+
+        // Calcular primer y último día del mes seleccionado
+        const mesesMap = {
+          "Enero": 0,
+          "Febrero": 1,
+          "Marzo": 2,
+          "Abril": 3,
+          "Mayo": 4,
+          "Junio": 5,
+          "Julio": 6,
+          "Agosto": 7,
+          "Septiembre": 8,
+          "Octubre": 9,
+          "Noviembre": 10,
+          "Diciembre": 11
+        };
+
+        const year = 2025;
+        const monthIndex = mesesMap[value];
+
+        // Primer día del mes
+        const firstDay = new Date(year, monthIndex, 1);
+        // Último día del mes: siguiente mes día 0
+        const lastDay = new Date(year, monthIndex + 1, 0);
+
+        // Formatear fechas en yyyy-mm-dd
+        const formatDate = (date) => {
+          let mm = date.getMonth() + 1;
+          let dd = date.getDate();
+          return `${date.getFullYear()}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
+        };
+
+        diaIni.value = formatDate(firstDay);
+        diaFin.value = formatDate(lastDay);
       } else {
         semanaSelect.disabled = false;
+        diaIni.value = "";
+        diaFin.value = "";
       }
     }
 
     function resetForm() {
-      semanaSelect.disabled = false;
       mesSelect.disabled = false;
-      semanaHidden.value = "false";
+      semanaSelect.disabled = false;
       diaIni.value = "";
       diaFin.value = "";
+      semanaHidden.value = "false";
+      mesSelect.value = "";
+      semanaSelect.value = "";
     }
   </script>
 </body>
