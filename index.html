@@ -9,7 +9,13 @@
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
   <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
     <h2 class="text-2xl font-bold text-center text-purple-700 mb-6">Formulario Horas 2025</h2>
-    <form action="https://n8n.dev.karibuspa.com/webhook/reporte_horas" method="POST" class="space-y-4">
+
+    <!-- Mensaje aclaratorio -->
+    <p class="text-sm text-center text-gray-700 mb-4 bg-yellow-100 border border-yellow-300 p-2 rounded">
+      Por favor, elige <strong>solo un mes</strong> o <strong>una semana</strong>, no ambos.
+    </p>
+
+    <form action="https://n8n.dev.karibuspa.com/webhook-test/reporte_horas" method="POST" class="space-y-4">
       <div>
         <label class="block font-semibold">Mes:</label>
         <select id="mes" name="mes" class="w-full mt-1 border rounded px-3 py-2" onchange="handleMesChange(this.value)">
@@ -120,7 +126,6 @@
     const diaFin = document.getElementById("dia_fin");
     const semanaHidden = document.getElementById("semana_hidden");
 
-    // Llenar select de semana
     Object.keys(semanas).forEach((sem) => {
       const option = document.createElement("option");
       option.value = sem;
