@@ -15,7 +15,7 @@
       Por favor, elige <strong>solo un mes</strong> o <strong>una semana</strong>, no ambos.
     </p>
 
-    <form action="https://n8n.dev.karibuspa.com/webhook-test/reporte_horas" method="POST" class="space-y-4">
+    <form id="formularioHoras" action="https://n8n.dev.karibuspa.com/webhook-test/reporte_horas" method="POST" class="space-y-4">
       <div>
         <label class="block font-semibold">Mes:</label>
         <select id="mes" name="mes" class="w-full mt-1 border rounded px-3 py-2" onchange="handleMesChange(this.value)">
@@ -129,7 +129,7 @@
     Object.keys(semanas).forEach((sem) => {
       const option = document.createElement("option");
       option.value = sem;
-      option.textContent = ${sem} (${semanas[sem][0]} - ${semanas[sem][1]});
+      option.textContent = `${sem} (${semanas[sem][0]} - ${semanas[sem][1]})`;
       semanaSelect.appendChild(option);
     });
 
@@ -152,35 +152,21 @@
         semanaSelect.disabled = true;
         semanaHidden.value = "false";
 
-        // Calcular primer y último día del mes seleccionado
         const mesesMap = {
-          "Enero": 0,
-          "Febrero": 1,
-          "Marzo": 2,
-          "Abril": 3,
-          "Mayo": 4,
-          "Junio": 5,
-          "Julio": 6,
-          "Agosto": 7,
-          "Septiembre": 8,
-          "Octubre": 9,
-          "Noviembre": 10,
-          "Diciembre": 11
+          "Enero": 0, "Febrero": 1, "Marzo": 2, "Abril": 3,
+          "Mayo": 4, "Junio": 5, "Julio": 6, "Agosto": 7,
+          "Septiembre": 8, "Octubre": 9, "Noviembre": 10, "Diciembre": 11
         };
 
         const year = 2025;
         const monthIndex = mesesMap[value];
-
-        // Primer día del mes
         const firstDay = new Date(year, monthIndex, 1);
-        // Último día del mes: siguiente mes día 0
         const lastDay = new Date(year, monthIndex + 1, 0);
 
-        // Formatear fechas en yyyy-mm-dd
         const formatDate = (date) => {
           let mm = date.getMonth() + 1;
           let dd = date.getDate();
-          return ${date.getFullYear()}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd};
+          return `${date.getFullYear()}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
         };
 
         diaIni.value = formatDate(firstDay);
@@ -201,6 +187,14 @@
       mesSelect.value = "";
       semanaSelect.value = "";
     }
+
+    // Validación antes de enviar
+    document.getElementById("formularioHoras").addEventListener("submit", function(e) {
+      if (!mesSelect.value && !semanaSelect.value) {
+        e.preventDefault();
+        alert("Por favor, selecciona un mes o una semana antes de enviar.");
+      }
+    });
   </script>
 </body>
 </html>
