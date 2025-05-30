@@ -145,7 +145,7 @@
 
         // 🔒 Validación de semana futura
         if (finSemana > hoy) {
-          alert("Debes seleccionar una semana vencida o actual.");
+          alert("Debes seleccionar una semana vencida.");
           semanaSelect.value = "";
           return;
         }
@@ -178,7 +178,7 @@
 
         // 🔒 Validación de mes futuro
         if (lastDay > hoy) {
-          alert("Debes seleccionar un mes vencido o actual.");
+          alert("Debes seleccionar un mes vencido.");
           mesSelect.value = "";
           return;
         }
