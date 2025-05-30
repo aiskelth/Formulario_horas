@@ -12,7 +12,7 @@
 
     <!-- Mensaje aclaratorio -->
     <p class="text-sm text-center text-gray-700 mb-4 bg-yellow-100 border border-yellow-300 p-3 rounded">
-      Por favor, elige <strong>solo un mes</strong> o <strong>una semana</strong> (fecha vencida), no ambos.
+      Por favor, elige <strong>solo un mes</strong> o <strong>una semana</strong>, no ambos.
     </p>
 
     <form id="formularioHoras" action="https://n8n.dev.karibuspa.com/webhook-test/reporte_horas" method="POST" class="space-y-4">
@@ -140,6 +140,16 @@
 
     function handleSemanaChange(value) {
       if (value) {
+        const hoy = new Date().toISOString().split('T')[0];
+        const finSemana = semanas[value][1];
+
+        // 🔒 Validación de semana futura
+        if (finSemana > hoy) {
+          alert("Debes seleccionar una semana vencida o actual.");
+          semanaSelect.value = "";
+          return;
+        }
+
         mesSelect.disabled = true;
         semanaHidden.value = "true";
         diaIni.value = semanas[value][0];
@@ -154,19 +164,27 @@
 
     function handleMesChange(value) {
       if (value) {
-        semanaSelect.disabled = true;
-        semanaHidden.value = "false";
-
         const mesesMap = {
           "Enero": 0, "Febrero": 1, "Marzo": 2, "Abril": 3,
           "Mayo": 4, "Junio": 5, "Julio": 6, "Agosto": 7,
           "Septiembre": 8, "Octubre": 9, "Noviembre": 10, "Diciembre": 11
         };
 
+        const hoy = new Date();
         const year = 2025;
         const monthIndex = mesesMap[value];
         const firstDay = new Date(year, monthIndex, 1);
         const lastDay = new Date(year, monthIndex + 1, 0);
+
+        // 🔒 Validación de mes futuro
+        if (lastDay > hoy) {
+          alert("Debes seleccionar un mes vencido o actual.");
+          mesSelect.value = "";
+          return;
+        }
+
+        semanaSelect.disabled = true;
+        semanaHidden.value = "false";
 
         const formatDate = (date) => {
           let mm = date.getMonth() + 1;
