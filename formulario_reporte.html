@@ -7,12 +7,13 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-    <h2 class="text-2xl font-bold text-center text-purple-700 mb-6">Formulario Horas 2025</h2>
-    <form action="https://n8n.dev.karibuspa.com/webhook-test/reporte_horas" method="POST" class="space-y-4">
+  <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-lg">
+    <h2 class="text-3xl font-bold text-center text-purple-700 mb-6">Formulario Horas 2025</h2>
+
+    <form action="https://n8n.dev.karibuspa.com/webhook-test/reporte_horas" method="POST" class="space-y-6">
       <div>
-        <label class="block font-semibold">Mes:</label>
-        <select id="mes" name="mes" class="w-full mt-1 border rounded px-3 py-2" onchange="handleMesChange(this.value)">
+        <label class="block font-semibold mb-1">Mes:</label>
+        <select id="mes" name="mes" class="w-full border rounded px-4 py-3 text-gray-700">
           <option value="">Seleccione un mes</option>
           <option>Enero</option>
           <option>Febrero</option>
@@ -28,15 +29,22 @@
           <option>Diciembre</option>
         </select>
       </div>
-      <div class="flex justify-between mt-6">
-        <button type="submit" class="bg-purple-700 text-white px-4 py-2 rounded hover:bg-purple-800">
+
+      <div class="flex justify-between pt-4">
+        <button type="submit" class="bg-purple-700 text-white px-6 py-3 rounded hover:bg-purple-800">
           Enviar
         </button>
-        <button type="reset" class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600" onclick="resetForm()">
+        <button type="reset" class="bg-gray-500 text-white px-6 py-3 rounded hover:bg-gray-600" onclick="resetForm()">
           Limpiar
         </button>
       </div>
     </form>
-</div>
+  </div>
+
+  <script>
+    function resetForm() {
+      document.getElementById("mes").value = "";
+    }
+  </script>
 </body>
 </html>

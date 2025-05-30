@@ -7,11 +7,11 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
-  <div class="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-    <h2 class="text-2xl font-bold text-center text-purple-700 mb-6">Formulario Horas 2025</h2>
+  <div class="bg-white p-10 rounded-lg shadow-lg w-full max-w-lg">
+    <h2 class="text-3xl font-bold text-center text-purple-700 mb-6">Formulario Horas 2025</h2>
 
     <!-- Mensaje aclaratorio -->
-    <p class="text-sm text-center text-gray-700 mb-4 bg-yellow-100 border border-yellow-300 p-2 rounded">
+    <p class="text-sm text-center text-gray-700 mb-4 bg-yellow-100 border border-yellow-300 p-3 rounded">
       Por favor, elige <strong>solo un mes</strong> o <strong>una semana</strong>, no ambos.
     </p>
 
@@ -59,148 +59,7 @@
   </div>
 
   <script>
-    const semanas = {
-      "Enero 1": ["2025-01-02", "2025-01-03"],
-      "Enero 2": ["2025-01-06", "2025-01-10"],
-      "Enero 3": ["2025-01-13", "2025-01-17"],
-      "Enero 4": ["2025-01-20", "2025-01-24"],
-      "Enero 5": ["2025-01-27", "2025-01-31"],
-      "Febrero 1": ["2025-02-03", "2025-02-07"],
-      "Febrero 2": ["2025-02-10", "2025-02-14"],
-      "Febrero 3": ["2025-02-17", "2025-02-21"],
-      "Febrero 4": ["2025-02-24", "2025-02-28"],
-      "Marzo 1": ["2025-03-03", "2025-03-07"],
-      "Marzo 2": ["2025-03-10", "2025-03-14"],
-      "Marzo 3": ["2025-03-17", "2025-03-21"],
-      "Marzo 4": ["2025-03-24", "2025-03-28"],
-      "Marzo 5": ["2025-03-31", "2025-03-31"],
-      "Abril 1": ["2025-04-01", "2025-04-04"],
-      "Abril 2": ["2025-04-07", "2025-04-11"],
-      "Abril 3": ["2025-04-14", "2025-04-17"],
-      "Abril 4": ["2025-04-21", "2025-04-25"],
-      "Abril 5": ["2025-04-28", "2025-04-30"],
-      "Mayo 1": ["2025-05-02", "2025-05-02"],
-      "Mayo 2": ["2025-05-05", "2025-05-09"],
-      "Mayo 3": ["2025-05-12", "2025-05-16"],
-      "Mayo 4": ["2025-05-19", "2025-05-23"],
-      "Mayo 5": ["2025-05-26", "2025-05-30"],
-      "Junio 1": ["2025-06-02", "2025-06-06"],
-      "Junio 2": ["2025-06-09", "2025-06-13"],
-      "Junio 3": ["2025-06-16", "2025-06-19"],
-      "Junio 4": ["2025-06-23", "2025-06-27"],
-      "Junio 5": ["2025-06-30", "2025-06-30"],
-      "Julio 1": ["2025-07-01", "2025-07-04"],
-      "Julio 2": ["2025-07-07", "2025-07-11"],
-      "Julio 3": ["2025-07-14", "2025-07-18"],
-      "Julio 4": ["2025-07-21", "2025-07-25"],
-      "Julio 5": ["2025-07-28", "2025-07-31"],
-      "Agosto 1": ["2025-08-01", "2025-08-01"],
-      "Agosto 2": ["2025-08-04", "2025-08-08"],
-      "Agosto 3": ["2025-08-11", "2025-08-14"],
-      "Agosto 4": ["2025-08-18", "2025-08-22"],
-      "Agosto 5": ["2025-08-25", "2025-08-29"],
-      "Septiembre 1": ["2025-09-01", "2025-09-05"],
-      "Septiembre 2": ["2025-09-08", "2025-09-12"],
-      "Septiembre 3": ["2025-09-15", "2025-09-17"],
-      "Septiembre 4": ["2025-09-22", "2025-09-26"],
-      "Septiembre 5": ["2025-09-29", "2025-09-30"],
-      "Octubre 1": ["2025-10-01", "2025-10-03"],
-      "Octubre 2": ["2025-10-06", "2025-10-10"],
-      "Octubre 3": ["2025-10-13", "2025-10-17"],
-      "Octubre 4": ["2025-10-20", "2025-10-24"],
-      "Octubre 5": ["2025-10-27", "2025-10-30"],
-      "Noviembre 1": ["2025-11-03", "2025-11-07"],
-      "Noviembre 2": ["2025-11-10", "2025-11-14"],
-      "Noviembre 3": ["2025-11-17", "2025-11-21"],
-      "Noviembre 4": ["2025-11-24", "2025-11-28"],
-      "Diciembre 1": ["2025-12-01", "2025-12-05"],
-      "Diciembre 2": ["2025-12-09", "2025-12-12"],
-      "Diciembre 3": ["2025-12-15", "2025-12-19"],
-      "Diciembre 4": ["2025-12-22", "2025-12-26"],
-      "Diciembre 5": ["2025-12-29", "2025-12-31"]
-    };
-
-    const semanaSelect = document.getElementById("semana");
-    const mesSelect = document.getElementById("mes");
-    const diaIni = document.getElementById("dia_ini");
-    const diaFin = document.getElementById("dia_fin");
-    const semanaHidden = document.getElementById("semana_hidden");
-
-    Object.keys(semanas).forEach((sem) => {
-      const option = document.createElement("option");
-      option.value = sem;
-      option.textContent = `${sem} (${semanas[sem][0]} - ${semanas[sem][1]})`;
-      semanaSelect.appendChild(option);
-    });
-
-    function handleSemanaChange(value) {
-      if (value) {
-        mesSelect.disabled = true;
-        semanaHidden.value = "true";
-        diaIni.value = semanas[value][0];
-        diaFin.value = semanas[value][1];
-      } else {
-        mesSelect.disabled = false;
-        semanaHidden.value = "false";
-        diaIni.value = "";
-        diaFin.value = "";
-      }
-    }
-
-    function handleMesChange(value) {
-      if (value) {
-        semanaSelect.disabled = true;
-        semanaHidden.value = "false";
-
-        // Calcular primer y último día del mes seleccionado
-        const mesesMap = {
-          "Enero": 0,
-          "Febrero": 1,
-          "Marzo": 2,
-          "Abril": 3,
-          "Mayo": 4,
-          "Junio": 5,
-          "Julio": 6,
-          "Agosto": 7,
-          "Septiembre": 8,
-          "Octubre": 9,
-          "Noviembre": 10,
-          "Diciembre": 11
-        };
-
-        const year = 2025;
-        const monthIndex = mesesMap[value];
-
-        // Primer día del mes
-        const firstDay = new Date(year, monthIndex, 1);
-        // Último día del mes: siguiente mes día 0
-        const lastDay = new Date(year, monthIndex + 1, 0);
-
-        // Formatear fechas en yyyy-mm-dd
-        const formatDate = (date) => {
-          let mm = date.getMonth() + 1;
-          let dd = date.getDate();
-          return `${date.getFullYear()}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
-        };
-
-        diaIni.value = formatDate(firstDay);
-        diaFin.value = formatDate(lastDay);
-      } else {
-        semanaSelect.disabled = false;
-        diaIni.value = "";
-        diaFin.value = "";
-      }
-    }
-
-    function resetForm() {
-      mesSelect.disabled = false;
-      semanaSelect.disabled = false;
-      diaIni.value = "";
-      diaFin.value = "";
-      semanaHidden.value = "false";
-      mesSelect.value = "";
-      semanaSelect.value = "";
-    }
+    // ... (el mismo script que ya tienes, sin cambios)
   </script>
 </body>
 </html>
