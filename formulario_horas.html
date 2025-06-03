@@ -130,100 +130,57 @@
     const diaIni = document.getElementById("dia_ini");
     const diaFin = document.getElementById("dia_fin");
     const semanaHidden = document.getElementById("semana_hidden");
+    const loadingIndicator = document.getElementById("loadingIndicator");
 
-    Object.keys(semanas).forEach((sem) => {
-      const option = document.createElement("option");
-      option.value = sem;
-      option.textContent = `${sem} (${semanas[sem][0]} - ${semanas[sem][1]})`;
-      semanaSelect.appendChild(option);
-    });
+    function handleMesChange(mes) {
+      // Limpiar semanas anteriores
+      semanaSelect.innerHTML = '<option value="">Seleccione una semana</option>';
 
-    function handleSemanaChange(value) {
-      if (value) {
-        const hoy = new Date().toISOString().split('T')[0];
-        const finSemana = semanas[value][1];
+      if (mes) {
+        Object.keys(semanas).forEach((clave) => {
+          if (clave.startsWith(mes)) {
+            const option = document.createElement("option");
+            option.value = clave;
+            option.text = clave;
+            semanaSelect.appendChild(option);
+          }
+        });
 
-        // 🔒 Validación de semana futura
-        if (finSemana > hoy) {
-          alert("Debes seleccionar una semana vencida.");
-          semanaSelect.value = "";
-          return;
-        }
-
-        mesSelect.disabled = true;
-        semanaHidden.value = "true";
-        diaIni.value = semanas[value][0];
-        diaFin.value = semanas[value][1];
-      } else {
-        mesSelect.disabled = false;
+        semanaSelect.disabled = false;
+        semanaSelect.value = "";
         semanaHidden.value = "false";
         diaIni.value = "";
         diaFin.value = "";
+      } else {
+        semanaSelect.disabled = false;
       }
     }
 
-    function handleMesChange(value) {
-      if (value) {
-        const mesesMap = {
-          "Enero": 0, "Febrero": 1, "Marzo": 2, "Abril": 3,
-          "Mayo": 4, "Junio": 5, "Julio": 6, "Agosto": 7,
-          "Septiembre": 8, "Octubre": 9, "Noviembre": 10, "Diciembre": 11
-        };
-
-        const hoy = new Date();
-        const year = 2025;
-        const monthIndex = mesesMap[value];
-        const firstDay = new Date(year, monthIndex, 1);
-        const lastDay = new Date(year, monthIndex + 1, 0);
-
-        // 🔒 Validación de mes futuro
-        if (lastDay > hoy) {
-          alert("Debes seleccionar un mes vencido.");
-          mesSelect.value = "";
-          return;
-        }
-
-        semanaSelect.disabled = true;
-        semanaHidden.value = "false";
-
-        const formatDate = (date) => {
-          let mm = date.getMonth() + 1;
-          let dd = date.getDate();
-          return `${date.getFullYear()}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
-        };
-
-        diaIni.value = formatDate(firstDay);
-        diaFin.value = formatDate(lastDay);
+    function handleSemanaChange(semanaKey) {
+      if (semanaKey && semanas[semanaKey]) {
+        semanaHidden.value = semanaKey;
+        diaIni.value = semanas[semanaKey][0];
+        diaFin.value = semanas[semanaKey][1];
+        mesSelect.value = "";
       } else {
-        semanaSelect.disabled = false;
+        semanaHidden.value = "false";
         diaIni.value = "";
         diaFin.value = "";
       }
     }
 
     function resetForm() {
-      mesSelect.disabled = false;
+      semanaSelect.innerHTML = '<option value="">Seleccione una semana</option>';
       semanaSelect.disabled = false;
+      mesSelect.value = "";
+      semanaHidden.value = "false";
       diaIni.value = "";
       diaFin.value = "";
-      semanaHidden.value = "false";
-      mesSelect.value = "";
-      semanaSelect.value = "";
-      document.getElementById("loadingIndicator").classList.add("hidden");
-      document.getElementById("submitBtn").disabled = false;
-      document.getElementById("submitBtn").textContent = "Enviar";
+      loadingIndicator.classList.add("hidden");
     }
 
-    document.getElementById("formularioHoras").addEventListener("submit", function(e) {
-      if (!mesSelect.value && !semanaSelect.value) {
-        e.preventDefault();
-        alert("Por favor, selecciona un mes o una semana antes de enviar.");
-      } else {
-        document.getElementById("loadingIndicator").classList.remove("hidden");
-        const btn = document.getElementById("submitBtn");
-        btn.disabled = true;
-        btn.textContent = "Enviando...";
-      }
+    document.getElementById("formularioHoras").addEventListener("submit", function () {
+      loadingIndicator.classList.remove("hidden");
     });
   </script>
 </body>
