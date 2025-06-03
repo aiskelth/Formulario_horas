@@ -139,6 +139,7 @@
       if (value) {
         const hoy = new Date().toISOString().split('T')[0];
         const finSemana = semanas[value][1];
+
         if (finSemana > hoy) {
           alert("Debes seleccionar una semana vencida.");
           semanaSelect.value = "";
