@@ -15,7 +15,7 @@
       Por favor, elige <strong>solo un mes</strong> para enviar el avance de horas.
     </p>
 
-    <form id="formularioHoras" action="https://n8n.dev.karibuspa.com/webhook/reporte_horas" method="POST" class="space-y-4">
+    <form id="formularioHoras" action="https://n8n.dev.karibuspa.com/webhook/gestion_horas" method="POST" class="space-y-4">
       <div>
         <label class="block font-semibold">Mes:</label>
         <select id="mes" name="mes" class="w-full mt-1 border rounded px-3 py-2" onchange="handleMesChange(this.value)">
@@ -60,7 +60,7 @@
     const mesSelect = document.getElementById("mes");
     const diaIni = document.getElementById("dia_ini");
     const diaFin = document.getElementById("dia_fin");
-
+  
     function handleMesChange(value) {
       if (value) {
         const mesesMap = {
@@ -68,27 +68,31 @@
           "Mayo": 4, "Junio": 5, "Julio": 6, "Agosto": 7,
           "Septiembre": 8, "Octubre": 9, "Noviembre": 10, "Diciembre": 11
         };
-
+  
         const hoy = new Date();
         const year = 2025;
         const monthIndex = mesesMap[value];
+  
         const firstDay = new Date(year, monthIndex, 1);
         const lastDay = new Date(year, monthIndex + 1, 0);
-
-        if (lastDay > hoy) {
-          alert("Debes seleccionar un mes vencido.");
+  
+        // 🚨 Validación: bloquear solo si el mes es posterior al actual
+        const mesActual = hoy.getMonth();
+        const anioActual = hoy.getFullYear();
+        if (year > anioActual || (year === anioActual && monthIndex > mesActual)) {
+          alert("Debes seleccionar solo meses vencidos o en curso.");
           mesSelect.value = "";
           diaIni.value = "";
           diaFin.value = "";
           return;
         }
-
+  
         const formatDate = (date) => {
           let mm = date.getMonth() + 1;
           let dd = date.getDate();
           return `${date.getFullYear()}-${mm < 10 ? '0' + mm : mm}-${dd < 10 ? '0' + dd : dd}`;
         };
-
+  
         diaIni.value = formatDate(firstDay);
         diaFin.value = formatDate(lastDay);
       } else {
@@ -96,7 +100,7 @@
         diaFin.value = "";
       }
     }
-
+  
     function resetForm() {
       mesSelect.value = "";
       diaIni.value = "";
@@ -105,7 +109,7 @@
       document.getElementById("submitBtn").disabled = false;
       document.getElementById("submitBtn").textContent = "Enviar";
     }
-
+  
     document.getElementById("formularioHoras").addEventListener("submit", function(e) {
       if (!mesSelect.value) {
         e.preventDefault();
@@ -117,6 +121,6 @@
         btn.textContent = "Enviando...";
       }
     });
-  </script>
+  </script>  
 </body>
 </html>
