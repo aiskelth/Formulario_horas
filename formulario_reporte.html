@@ -28,7 +28,7 @@
           <option value="Noviembre">Noviembre</option>
           <option value="Diciembre">Diciembre</option>
         </select>
-        <p id="aviso" class="text-red-600 text-sm mt-2 hidden">Debes seleccionar un mes vencido.</p>
+        <p id="aviso" class="text-red-600 text-sm mt-2 hidden">Debes seleccionar un mes anterior o el mes actual.</p>
       </div>
 
       <div class="flex justify-between mt-6">
@@ -62,7 +62,8 @@
       Array.from(mesSelect.options).forEach(option => {
         const valor = option.value;
         if (mesesMap.hasOwnProperty(valor)) {
-          option.disabled = mesesMap[valor] >= mesActual;
+          // Desactiva solo los meses futuros
+          option.disabled = mesesMap[valor] > mesActual;
         }
       });
     }
@@ -70,13 +71,16 @@
     function resetForm() {
       mesSelect.value = "";
       aviso.classList.add("hidden");
+      document.getElementById("submitBtn").disabled = false;
+      document.getElementById("submitBtn").textContent = "Enviar";
+      document.getElementById("loadingIndicator").classList.add("hidden");
     }
 
     document.getElementById("formularioMes").addEventListener("submit", function(e) {
       const valor = mesSelect.value;
       const mesActual = new Date().getMonth();
 
-      if (!valor || mesesMap[valor] >= mesActual) {
+      if (!valor || mesesMap[valor] > mesActual) {
         e.preventDefault();
         aviso.classList.remove("hidden");
       } else {
@@ -87,7 +91,7 @@
       }
     });
 
-    // Llamar al inicio
+    // Ejecutar al cargar
     actualizarMesesDisponibles();
   </script>
 </body>
